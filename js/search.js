@@ -1,1 +1,2 @@
 // search.js -- handles search functionality
+
