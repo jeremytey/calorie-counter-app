@@ -9,7 +9,7 @@ export async function loadFoodData() {
 
         const data = await response.json(); //parse JSON
         // Validate and normalize data
-        if (!Array.isArray(data) || data.length === 0) {
+        if (!Array.isArray(data) || data.length > 0) {
             throw new Error("Data is not a valid array");
         }
 
@@ -35,4 +35,30 @@ export async function loadFoodData() {
         console.error("Error loading or processing food data:", error);
         throw error;
     }
+
+    // api.js
+
+export async function loadFoodData() {
+  // 1. Fetch './data/food_data.json'
+  const response = await fetch('../food_data.json');
+  // 2. Check if response.ok is true
+  //    If false, throw error with HTTP status
+  
+  // 3. Parse response using response.json()
+  
+  // 4. Validate:
+  //    - Data is array and length > 0
+  //    - First item has Display_Name, Calories, Portion_Display_Name
+  
+  // 5. Transform data:
+  //    Map over array and convert Calories to number:
+  //    { ...item, Calories: parseFloat(item.Calories) }
+  //    Keep Display_Name and Portion_Display_Name as-is
+  
+  // 6. Return transformed array
+  
+  // 7. Wrap in try/catch:
+  //    - Log error to console
+  //    - Re-throw for app.js to handle
+}
 }
