@@ -1,8 +1,9 @@
 // dom.js -- handles DOM manipulation
 
-renderResults(results)   
+renderResults(results, append)   
+    if not append
     clearResults()
-    get results container
+    for each result
     create element for each result // createResultElement(result)?
     set element content to result data
         append element to results container
@@ -16,9 +17,8 @@ clearSearchInput()
     set value to empty string
 
 createResultElement(result)
-    create div element
-    set class to 'result-item'
-    set inner HTML to formatted result data
+    create div element with class 'result-item'
+    create and append child elements for Name, Portion, Calories
     return element
 
 //UX STATES
@@ -32,12 +32,12 @@ disableSearchButton()
 
 showWarning(message)
     get warning container
-    set inner HTML to message
-    set display to 'block'
+    set textContent to message
+    remove 'hidden' class
 
 hideWarning()
     get warning container
-    set display to 'none'
+    add 'hidden' class
 
 showLoading()
     create loading spinner element
@@ -47,5 +47,12 @@ hideLoading()
     get loading spinner element
     remove from DOM
 
+// UI State
+export function toggleLoadMoreButton(show)
+    // get load-more button
+    // if show: remove 'hidden' class
+    // else: add 'hidden' class
 
-
+getSearchQuery()
+    // get search input element
+    // return trimmed string value
