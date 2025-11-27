@@ -1,29 +1,35 @@
 // dom.js -- handles DOM manipulation
 
-renderResults(results, append, limit=25)   
+// Module-level state
+let currentCount = 0
+let allSearchResults = []
+
+export function renderResults(results, append, limit = 25)
     if not append:
+        allSearchResults = results
+        currentCount = 0
         clearResults()
-        reset currentCount to 0
     
-    calculate how many items to render:
-        startIndex = currentCount
-        endIndex = min(currentCount + limit, results.length)
+    startIndex = currentCount
+    endIndex = min(currentCount + limit, allSearchResults.length)
     
+    get results container
     for i from startIndex to endIndex:
-        create element for results[i]
-        append to container
+        element = createResultElement(allSearchResults[i])
+        append element to container
     
-    update currentCount
+    currentCount = endIndex
     
-    if currentCount < results.length:
-        show load-more button
+    if currentCount < allSearchResults.length:
+        toggleLoadMoreButton(true)
     else:
-        hide load-more button
-clearResults()
+        toggleLoadMoreButton(false)
+
+export function clearResults()
     get results container
     set inner HTML to empty string
 
-clearSearchInput()
+export function clearSearchInput()
     get search input element
     set value to empty string
 
@@ -47,31 +53,32 @@ createResultElement(result)
     return div
 
 //UX STATES
-enableSearchButton()
+export function enableSearchButton()
     get search button element
     set disabled to false
 
-disableSearchButton()
+export function disableSearchButton()
     get search button element
     set disabled to true
 
-showWarning(message)
+export function showWarning(message)
     get warning container
     set textContent to message
     remove 'hidden' class
 
-hideWarning()
-    get warning container
+export function hideWarning()
+  get warning container
     add 'hidden' class
 
-showLoading()
-    create loading div element
+export function showLoading()
+  create loading div element
+    set id to 'loadingSpinner'
     set className to 'loading-spinner'
     set textContent to 'Loading...'
     append to DOM
 
-hideLoading()
-    get loading spinner element
+export function hideLoading()
+  get loading spinner element by id 'loadingSpinner'
     if exists:
     remove from DOM
 
@@ -79,7 +86,7 @@ hideLoading()
 export function toggleLoadMoreButton(show)
     // get load-more button
     // if show is true
-        // append to DOM
+        // remove 'hidden' class
     // else
-        // remove from DOM
+        // add 'hidden' class
 
