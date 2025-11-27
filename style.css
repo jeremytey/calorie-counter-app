@@ -29,3 +29,7 @@ body {
   margin-bottom: 8px;
   min-height: 20px; /* keeps layout stable */
 }
+
+.hidden {
+  display: none;
+}

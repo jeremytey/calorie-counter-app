@@ -1,13 +1,24 @@
 // dom.js -- handles DOM manipulation
 
-renderResults(results, append)   
-    if not append
-    clearResults()
-    for each result
-    create element for each result // createResultElement(result)?
-    set element content to result data
-        append element to results container
-
+renderResults(results, append, limit=25)   
+    if not append:
+        clearResults()
+        reset currentCount to 0
+    
+    calculate how many items to render:
+        startIndex = currentCount
+        endIndex = min(currentCount + limit, results.length)
+    
+    for i from startIndex to endIndex:
+        create element for results[i]
+        append to container
+    
+    update currentCount
+    
+    if currentCount < results.length:
+        show load-more button
+    else:
+        hide load-more button
 clearResults()
     get results container
     set inner HTML to empty string
@@ -17,9 +28,23 @@ clearSearchInput()
     set value to empty string
 
 createResultElement(result)
-    create div element with class 'result-item'
-    create and append child elements for Name, Portion, Calories
-    return element
+    create div element
+    set className to 'result-item'
+    
+    create h3 element for name
+        set textContent to food.Display_Name
+    
+    create p element for portion
+        set textContent to 'Portion: ' + food.Portion_Display_Name
+    
+    create p element for calories
+        set textContent to food.Calories + ' cal'
+    
+    append h3 to div
+    append portion p to div
+    append calories p to div
+    
+    return div
 
 //UX STATES
 enableSearchButton()
@@ -40,19 +65,21 @@ hideWarning()
     add 'hidden' class
 
 showLoading()
-    create loading spinner element
+    create loading div element
+    set className to 'loading-spinner'
+    set textContent to 'Loading...'
     append to DOM
 
 hideLoading()
     get loading spinner element
+    if exists:
     remove from DOM
 
 // UI State
 export function toggleLoadMoreButton(show)
     // get load-more button
-    // if show: remove 'hidden' class
-    // else: add 'hidden' class
+    // if show is true
+        // append to DOM
+    // else
+        // remove from DOM
 
-getSearchQuery()
-    // get search input element
-    // return trimmed string value
