@@ -11,7 +11,7 @@ try{
     throw new Error("Data is not a valid array");
     }
     const requiredFields = ['Display_Name', 'Calories', 'Portion_Display_Name'];
-    const normalizedData = data.map(item => {
+    const normalizedData = data.map(item => { // validate fields
     for (const field of requiredFields) {
         if (!(field in item)) {
         throw new Error(`Missing required field: ${field}`);

@@ -7,13 +7,13 @@
 
 
 export function searchFoods(query, foods) {
-    if (!query || query.trim() === '') {
+    if (!query || query.trim() === '') { // empty query 
         return [];
     }
     // temrporarily normalize query
     const normalizedQuery = query.trim().toLowerCase();
-    return foods.filter(food => {
+    return foods.filter(food => { // filter every food based on normalized name
         const normalizedName = food.Display_Name.trim().toLowerCase();
-        return normalizedName.includes(normalizedQuery);
+        return normalizedName.includes(normalizedQuery); // check if normalized name includes normalized query
     }); 
 }
