@@ -28,6 +28,9 @@ export function renderResults(results, append, limit = 25) {
 export function clearResultsContainer(){
     const resultsContainer = document.querySelector('#resultsPanel');
     resultsContainer.innerHTML = '';
+
+    currentCount = 0;
+    allSearchResults = [];
 }
 
 export function clearSearchInput(){
