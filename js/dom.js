@@ -4,89 +4,104 @@
 let currentCount = 0
 let allSearchResults = []
 
-export function renderResults(results, append, limit = 25)
-    if not append:
-        allSearchResults = results
-        currentCount = 0
-        clearResults()
-    
-    startIndex = currentCount
-    endIndex = min(currentCount + limit, allSearchResults.length)
-    
-    get results container
-    for i from startIndex to endIndex:
-        element = createResultElement(allSearchResults[i])
-        append element to container
-    
-    currentCount = endIndex
-    
-    if currentCount < allSearchResults.length:
-        toggleLoadMoreButton(true)
-    else:
-        toggleLoadMoreButton(false)
+export function renderResults(results, append, limit = 25) {
+    if (!append) {
+        allSearchResults = results;
+        currentCount = 0;
+        clearResultsContainer();
+    }
+    const startIndex = currentCount;
+    const endIndex = Math.min(currentCount + limit, allSearchResults.length);
+    const resultsContainer = document.querySelector('#resultsPanel');
+    for (let i = startIndex; i < endIndex; i++) {
+        const element = createResultElement(allSearchResults[i]);
+        resultsContainer.appendChild(element);
+    }
+    currentCount = endIndex;
+    if (currentCount < allSearchResults.length) {
+        toggleLoadMoreButton(true);
+    } else {
+        toggleLoadMoreButton(false);
+    }
+}
 
-export function clearResults()
-    get results container
-    set inner HTML to empty string
+export function clearResultsContainer(){
+    const resultsContainer = document.querySelector('#resultsPanel');
+    resultsContainer.innerHTML = '';
+}
 
-export function clearSearchInput()
-    get search input element
-    set value to empty string
+export function clearSearchInput(){
+    const searchInput = document.querySelector('#foodInput');
+    searchInput.value = '';
+}
 
-createResultElement(result)
-    create div element
-    set className to 'result-item'
-    
-    create h3 element for name
-        set textContent to food.Display_Name
-    
-    create p element for portion
-        set textContent to 'Portion: ' + food.Portion_Display_Name
-    
-    create p element for calories
-        set textContent to food.Calories + ' cal'
-    
-    append h3 to div
-    append portion p to div
-    append calories p to div
-    
-    return div
+export function createResultElement(result){
+    const resultDiv = document.createElement('div');
+    resultDiv.className = 'result-item';
+
+    const nameElem = document.createElement('h3');
+    nameElem.textContent = result.Display_Name;
+
+    const portionElem = document.createElement('p');
+    portionElem.textContent = `Portion: ${result.Portion_Display_Name}`;
+
+    const caloriesElem = document.createElement('p');
+    caloriesElem.textContent = `${result.Calories} cal`;
+
+    resultDiv.appendChild(nameElem);
+    resultDiv.appendChild(portionElem);
+    resultDiv.appendChild(caloriesElem);
+
+    return resultDiv;
+}
 
 //UX STATES
-export function enableSearchButton()
-    get search button element
-    set disabled to false
+export function enableSearchButton(){
+    const searchButton = document.querySelector('#searchBtn');
+    searchButton.disabled = false;
+}
+export function disableSearchButton(){
+    const searchButton = document.querySelector('#searchBtn');
+    searchButton.disabled = true;
+}
 
-export function disableSearchButton()
-    get search button element
-    set disabled to true
+export function showWarning(message){
+    const warningContainer = document.querySelector('#warningBox');
+    warningContainer.textContent = message;
+    warningContainer.classList.remove('hidden');
+}
 
-export function showWarning(message)
-    get warning container
-    set textContent to message
-    remove 'hidden' class
+export function hideWarning(){
+    const warningContainer = document.querySelector('#warningBox');
+    warningContainer.classList.add('hidden');
+}
 
-export function hideWarning()
-  get warning container
-    add 'hidden' class
+export function showLoading(){
+    const spinner = document.createElement('div');
+    spinner.id = 'loadingSpinner';
+    spinner.className = 'loading-spinner';
+    spinner.textContent = 'Loading...';
+    document.body.appendChild(spinner);
+}
 
-export function showLoading()
-  create loading div element
-    set id to 'loadingSpinner'
-    set className to 'loading-spinner'
-    set textContent to 'Loading...'
-    append to DOM
+export function hideLoading(){
+    const spinner = document.querySelector('#loadingSpinner');
+    if (spinner) {
+        spinner.remove();
+    }
+}
 
-export function hideLoading()
-  get loading spinner element by id 'loadingSpinner'
-    if exists:
-    remove from DOM
+// UI State for Load More button
+export function toggleLoadMoreButton(show) {
+    const loadMoreButton = document.querySelector('#loadMoreBtn');
+    if (show) {
+        loadMoreButton.classList.remove('hidden');
+    } else {
+        loadMoreButton.classList.add('hidden');
+    }
+}
 
-// UI State
-export function toggleLoadMoreButton(show)
-    // get load-more button
-    // if show is true
-        // remove 'hidden' class
-    // else
-        // add 'hidden' class
-
+export function getSearchQuery() {
+    const input = document.querySelector('#foodInput');
+    return input.value.trim();
+}
