@@ -1,13 +1,13 @@
 // app.js -- entry point, orchestrates everything
 
-import { loadFoodData } from './api.js';
-import { searchFoods } from './search.js';
-import * as dom from './dom.js';
+import { loadFoodData } from 'api.js';
+import { searchFoods } from 'search.js';
+import * as dom from 'dom.js';
 
 let foodData = []; // to hold loaded food data
 
 async function init() {
-  document.addEventListener('DOMContentLoaded', async () => {
+
     try {
       dom.showLoading();
       foodData = await loadFoodData();
@@ -26,11 +26,7 @@ async function init() {
 
     const loadMoreButton = document.querySelector('#loadMoreBtn');
     loadMoreButton.addEventListener('click', handleLoadMore);
-  });
-}
-
-init();
-
+  };
 
 
 function handleSearch() {
@@ -61,3 +57,6 @@ function handleClear() {
 function handleLoadMore() {
   dom.renderResults([], true);
 }
+
+
+document.addEventListener('DOMContentLoaded', init);
