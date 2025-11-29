@@ -19,8 +19,6 @@ try{
     }
     return {
         ...item,
-        Name: item.Display_Name,
-        Portion: item.Portion_Display_Name,
         Calories: Number(item.Calories)
     };
     } );    

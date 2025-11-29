@@ -1,8 +1,8 @@
 // app.js -- entry point, orchestrates everything
 
-import { loadFoodData } from 'api.js';
-import { searchFoods } from 'search.js';
-import * as dom from 'dom.js';
+import { loadFoodData } from './api.js';
+import { searchFoods } from './search.js';
+import * as dom from './dom.js';
 
 let foodData = []; // to hold loaded food data
 
