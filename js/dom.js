@@ -38,7 +38,7 @@ export function clearSearchInput(){
     searchInput.value = '';
 }
 
-export function createResultElement(result){
+function createResultElement(result){
     const resultDiv = document.createElement('div');
     resultDiv.className = 'result-item';
 

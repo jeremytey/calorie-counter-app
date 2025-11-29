@@ -2,7 +2,7 @@ import csv
 import json
 
 # Read the CSV file
-with open('food_data.csv', 'r', encoding='utf-8') as csv_file:
+with open('food_data.csv', 'r', encoding='utf-8-sig') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     food_items = list(csv_reader)
 
