@@ -8,7 +8,8 @@ export function renderResults(results, append, limit = 25) {
     if (!append) {
         allSearchResults = results;
         currentCount = 0;
-        clearResultsContainer();
+        const resultsContainer = document.querySelector('#resultsPanel');
+        resultsContainer.innerHTML = '';
     }
     const startIndex = currentCount;
     const endIndex = Math.min(currentCount + limit, allSearchResults.length);

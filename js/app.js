@@ -34,9 +34,9 @@ function handleSearch() {
   if (query.trim() === '') {
     dom.showWarning("Please enter a search term.");
     return;
-  } else {
+  } 
     dom.hideWarning();
-  }
+    
   const results = searchFoods(query, foodData);
   if (results.length === 0) {
     dom.showWarning("No matches found.");
