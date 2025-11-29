@@ -7,49 +7,57 @@ import * as dom from './dom.js';
 let foodData = []; // to hold loaded food data
 
 async function init() {
-DOM initialization
-try:
-    dom.showLoading()
-    foodData = await loadFoodData()
-    dom.hideLoading()
-    dom.enableSearchButton()
-  catch error:
-    dom.hideLoading()
-    alert "Failed to load food data. Please refresh."
-    return (stop initialization)
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      dom.showLoading();
+      foodData = await loadFoodData();
+      dom.hideLoading();
+      dom.enableSearchButton();
+    } catch (error) {
+      dom.hideLoading();
+      alert("Failed to load food data. Please refresh.");
+      return;
+    }
+    const searchButton = document.querySelector('#searchBtn');
+    searchButton.addEventListener('click', handleSearch);
 
-  add event listeners to searchBtn for 'click' event to call handleSearch
-  add event listeners to clearBtn for 'click' event to call handleClear
-  add event listeners to loadMoreBtn for 'click' event to call handleLoadMore
-  
+    const clearButton = document.querySelector('#clearBtn');
+    clearButton.addEventListener('click', handleClear);
+
+    const loadMoreButton = document.querySelector('#loadMoreBtn');
+    loadMoreButton.addEventListener('click', handleLoadMore);
+  });
 }
 
+init();
+
+
+
 function handleSearch() {
-  const query = dom.getSearchQuery()
+  const query = dom.getSearchQuery();
   if (query.trim() === '') {
-    dom.showWarning("Please enter a search term.")
-    return
+    dom.showWarning("Please enter a search term.");
+    return;
   } else {
-    dom.hideWarning()
-
-  call searchFoods with query and foodData to get results
-  if results.length === 0:
-  dom.showWarning("No matches found")
-  dom.clearResultsContainer()
-  dom.toggleLoadMoreButton(false)
-  else:
-  dom.renderResults(results, false)
-
+    dom.hideWarning();
+  }
+  const results = searchFoods(query, foodData);
+  if (results.length === 0) {
+    dom.showWarning("No matches found.");
+    dom.clearResultsContainer();
+    dom.toggleLoadMoreButton(false);
+  } else {
+    dom.renderResults(results, false);
+  }
 }
 
 function handleClear() {
-  call dom.clearSearchInput()
-  call dom.clearResultsContainer()
-  dom.hideWarning()
-  dom.toggleLoadMoreButton(false)
+  dom.clearSearchInput();
+  dom.clearResultsContainer();
+  dom.hideWarning();
+  dom.toggleLoadMoreButton(false);
 }
 
 function handleLoadMore() {
-  call dom.renderResults with empty array, append = true
-
+  dom.renderResults([], true);
 }
